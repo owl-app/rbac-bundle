@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+        <imports>
+        <import resource="services/form.xml" />
+    </imports>
+
+    <services>
+        <defaults public="true" />
+
+        <service id="owl.custom_factory.rbac_permission" class="Owl\Component\Rbac\Factory\PermissionFactory" decorates="owl.factory.rbac_permission" decoration-priority="256" public="false">
+            <argument type="service" id="owl.custom_factory.rbac_permission.inner" />
+        </service>
+        <service id="Owl\Component\Rbac\Factory\PermissionFactoryInterface" alias="owl.custom_factory.rbac_permission" />
+
+        <service id="owl.factory.permission_form" class="Owl\Bundle\RbacBundle\Factory\PermissionFormFactory">
+            <argument type="service" id="owl.custom_factory.rbac_permission" />
+            <argument type="service" id="owl.repository.rbac_permission" />
+            <argument type="service" id="owl.repository.rbac_role" />
+            <argument type="service" id="owl.routes_permission_provider.rbac" />
+            <argument type="service" id="form.factory" />
+        </service>
+
+        <service id="Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface" alias="owl.factory.permission_form" />
+        
+        <service id="owl.permission_provider.rbac" class="Owl\Component\Rbac\Provider\PermissionProvider">
+            <argument type="service" id="owl_rbac.manager" />
+            <tag name="user_permission_provider" alias="rbac" />
+        </service>
+
+        <service id="owl.routes_permission_provider.rbac" class="Owl\Component\Rbac\Provider\RoutesPermissionProvider">
+            <argument type="service" id="router" />
+        </service>
+    </services>
+</container>

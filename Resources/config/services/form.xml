@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="owl.form.type.rbac_role.validation_groups" type="collection">
+            <parameter>owl</parameter>
+        </parameter>
+        <parameter key="owl.form.type.rbac_permission.validation_groups" type="collection">
+            <parameter>owl</parameter>
+        </parameter>
+        <parameter key="owl.form.type.rbac_assign.validation_groups" type="collection">
+            <parameter>owl</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+        <defaults public="true" />
+
+         <service id="owl.form.type.rbac_role" class="Owl\Bundle\RbacBundle\Form\Type\RoleType">
+            <argument>%owl.model.rbac_role.class%</argument>
+            <argument>%owl.form.type.rbac_role.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="owl.form.type.rbac_permission" class="Owl\Bundle\RbacBundle\Form\Type\PermissionType">
+            <argument>%owl.model.rbac_permission.class%</argument>
+            <argument>%owl.form.type.rbac_permission.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="owl.form.type.rbac_permission" class="Owl\Bundle\RbacBundle\Form\Type\AssignType">
+            <argument>%owl.form.type.rbac_assign.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="owl.form.type.rbac_permission_available" class="Owl\Bundle\RbacBundle\Form\Type\AvailablePermissionType">
+            <argument>%owl.model.rbac_permission.class%</argument>
+            <argument>%owl.form.type.rbac_permission.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+    </services>
+</container>

@@ -1,0 +1,6 @@
+# jms_serializer:
+#     metadata:
+#         directories:
+#             owl-rbac:
+#                 namespace_prefix: "Owl\\Component\\Rbac"
+#                 path: "@OwlRbacBundle/Resources/config/serializer"
