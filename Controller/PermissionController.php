@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Owl\Bundle\RbacBundle\Controller;
 
 use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
-use Owl\Bridge\SyliusResource\Controller\BaseController;
+use Owl\Bridge\SyliusResourceBridge\Controller\BaseController;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Resource\Exception\DeleteHandlingException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +30,7 @@ final class PermissionController extends BaseController
 
     public function addAction(Request $request): Response
     {
-        if(!$request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'It should be XHR request');
         }
 
@@ -46,7 +46,7 @@ final class PermissionController extends BaseController
         $this->isGrantedOr403($configuration, 'add_availables_permission');
         $newResource = $this->newResourceFactory->create($configuration, $this->factory);
 
-        $form = $this->container->get('form.factory')->createNamed('', $configuration->getFormType(), $newResource,  $formOptions);
+        $form = $this->container->get('form.factory')->createNamed('', $configuration->getFormType(), $newResource, $formOptions);
         $form->handleRequest($request);
 
         if ($request->isMethod('POST') && $form->isSubmitted() && $form->isValid()) {
@@ -71,7 +71,7 @@ final class PermissionController extends BaseController
 
     public function removeAction(Request $request): Response
     {
-        if(!$request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'It should be XHR request');
         }
 

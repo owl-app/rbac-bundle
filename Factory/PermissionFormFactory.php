@@ -23,7 +23,6 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         private RoutesPermissionProviderInterface $routesPermissionProvider,
         private FormFactoryInterface $formFactory
     ) {
-
     }
 
     public function createByRoutes(RequestConfiguration $requestConfiguration): array
@@ -32,9 +31,9 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         $routes = $this->routesPermissionProvider->getPermissions();
         $existPermissions = $this->permissionRepository->findAllNames();
 
-        foreach($routes as $name => $route) {
+        foreach ($routes as $name => $route) {
             $formsPermission[$route['group']][] = $this->createForm(
-                $this->permissionFactory->createWithData($name, $route['group'], $route['description']), 
+                $this->permissionFactory->createWithData($name, $route['group'], $route['description']),
                 $requestConfiguration,
                 in_array($name, $existPermissions)
             );
@@ -48,21 +47,21 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         $formsPermission = [];
         $existPermissions = $this->permissionRepository->findAll();
 
-        if($withRoles) {
+        if ($withRoles) {
             $existsRoles = $this->roleRepository->findAll();
 
-            foreach($existsRoles as $role) {
+            foreach ($existsRoles as $role) {
                 $formsPermission['availables_roles'][] = $this->createForm(
-                    $role, 
+                    $role,
                     $requestConfiguration,
                     in_array($role->getName(), $assignedPermissions),
                 );
             }
         }
-        
-        foreach($existPermissions as $permission) {
+
+        foreach ($existPermissions as $permission) {
             $formsPermission[$permission->getGroupPermission()][] = $this->createForm(
-                $permission, 
+                $permission,
                 $requestConfiguration,
                 in_array($permission->getName(), $assignedPermissions),
                 ['disabled' => in_array($permission->getName(), $disabledPermissions)]

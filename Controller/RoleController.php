@@ -7,7 +7,7 @@ namespace Owl\Bundle\RbacBundle\Controller;
 use Exception;
 use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
 use Owl\Bundle\RbacManagerBundle\Factory\ItemFactoryInterface;
-use Owl\Bridge\SyliusResource\Controller\BaseController;
+use Owl\Bridge\SyliusResourceBridge\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Owl\Bundle\RbacManagerBundle\Manager\ManagerInterface;
@@ -31,7 +31,7 @@ final class RoleController extends BaseController
             'configuration' => $configuration,
             'metadata' => $this->metadata,
             'role' => $resource,
-            'forms' => $forms 
+            'forms' => $forms
         ]);
     }
 
@@ -68,16 +68,16 @@ final class RoleController extends BaseController
             $roleItem = $rbacItemFactory->create(Item::TYPE_ROLE, $role->getName());
             $assignItem = $rbacItemFactory->create($formData['type'], $formData['name']);
 
-            try{
-                $rbacManager->{$action.'Child'}($roleItem , $assignItem);
-    
+            try {
+                $rbacManager->{$action.'Child'}($roleItem, $assignItem);
+
                 if (!$configuration->isHtmlRequest()) {
                     $responseData = [
                         'message' => $this->get('translator')->trans('owl.rbac.permission.add_success', [], 'flashes')
                     ];
                     return $this->createRestView($configuration, $responseData, Response::HTTP_OK);
                 }
-            }catch(Exception $e) {
+            } catch(Exception $e) {
                 $responseData = [
                     'message' => $e->getMessage()
                 ];

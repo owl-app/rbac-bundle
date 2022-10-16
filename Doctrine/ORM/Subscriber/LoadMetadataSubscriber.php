@@ -32,7 +32,7 @@ final class LoadMetadataSubscriber implements EventSubscriber
     {
         $metadata = $eventArguments->getClassMetadata();
 
-        if($metadata->getName() === $this->authItemClass) {
+        if ($metadata->getName() === $this->authItemClass) {
             $metadata->setPrimaryTable(['name' => $this->itemTableName]);
         }
     }

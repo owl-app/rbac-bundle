@@ -10,5 +10,4 @@ use Owl\Component\Rbac\Repository\RoleRepositoryInterface;
 
 class RoleRepository extends EntityRepository implements RoleRepositoryInterface
 {
-    
 }
