@@ -7,7 +7,7 @@ namespace Owl\Bundle\RbacBundle\Controller;
 use Exception;
 use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
 use Owl\Bundle\RbacManagerBundle\Factory\ItemFactoryInterface;
-use Owl\Bridge\SyliusResourceBridge\Controller\BaseController;
+use Owl\Bridge\SyliusResource\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Owl\Bundle\RbacManagerBundle\Manager\ManagerInterface;

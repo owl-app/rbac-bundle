@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Owl\Bundle\RbacBundle\Controller;
 
 use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
-use Owl\Bridge\SyliusResourceBridge\Controller\BaseController;
+use Owl\Bridge\SyliusResource\Controller\BaseController;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Resource\Exception\DeleteHandlingException;
 use Symfony\Component\HttpFoundation\JsonResponse;
