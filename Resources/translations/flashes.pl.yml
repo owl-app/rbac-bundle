@@ -1,5 +1,0 @@
-owl:
-    city:
-        accept: 'Opinia została pomyślnie zaakceptowana.'
-        reject: 'Opinia została pomyślnie odrzucona.'
-        wait_for_the_acceptation: 'Twoja opinia czeka na akceptację.'
