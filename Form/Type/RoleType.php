@@ -24,6 +24,11 @@ final class RoleType extends AbstractResourceType
         ;
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'owl_rbac_role'
+     */
     public function getBlockPrefix(): string
     {
         return 'owl_rbac_role';

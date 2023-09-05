@@ -45,6 +45,9 @@ final class RoleController extends BaseController
         return $this->changePermission('remove', $request, $rbacManager, $rbacItemFactory);
     }
 
+    /**
+     * @return Response|null
+     */
     private function changePermission(string $action, Request $request, ManagerInterface $rbacManager, ItemFactoryInterface $rbacItemFactory)
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);

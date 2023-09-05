@@ -21,6 +21,11 @@ final class LoadMetadataSubscriber implements EventSubscriber
         $this->itemTableName = $itemTableName;
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return list{'loadClassMetadata'}
+     */
     public function getSubscribedEvents(): array
     {
         return [

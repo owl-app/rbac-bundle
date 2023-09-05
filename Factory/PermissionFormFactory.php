@@ -25,6 +25,11 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
     ) {
     }
 
+    /**
+     * @return array[]
+     *
+     * @psalm-return array<list{mixed,...}>
+     */
     public function createByRoutes(RequestConfiguration $requestConfiguration): array
     {
         $formsPermission = [];
@@ -42,6 +47,11 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         return $formsPermission;
     }
 
+    /**
+     * @return array[]
+     *
+     * @psalm-return array<list{mixed,...}>
+     */
     public function createByExists(RequestConfiguration $requestConfiguration, array $assignedPermissions, array $disabledPermissions = [], bool $withRoles = false): array
     {
         $formsPermission = [];
@@ -71,7 +81,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         return $formsPermission;
     }
 
-    private function createForm(AuthItemInterface $permission, RequestConfiguration $requestConfiguration, bool $exist, array $customFormOptions = [])
+    private function createForm(AuthItemInterface $permission, RequestConfiguration $requestConfiguration, bool $exist, array $customFormOptions = []): \Symfony\Component\Form\FormView
     {
         $formOptions = array_merge($requestConfiguration->getFormOptions(), $customFormOptions, [
             'description_permission' => $permission->getDescription(),
@@ -85,6 +95,11 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         return $form->createView();
     }
 
+    /**
+     * @return (false|mixed|string)[]
+     *
+     * @psalm-return list{false|mixed, mixed|string}
+     */
     private function getDataFromRoute(string $name, Route $route): array
     {
         $vars = $route->getDefaults()['_sylius']['vars'] ?? [];

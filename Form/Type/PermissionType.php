@@ -19,6 +19,11 @@ final class PermissionType extends AbstractResourceType
         ;
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'owl_rbac_permission'
+     */
     public function getBlockPrefix(): string
     {
         return 'owl_rbac_permission';

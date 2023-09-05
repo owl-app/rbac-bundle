@@ -41,6 +41,11 @@ final class AvailablePermissionType extends AbstractResourceType
         $view->vars['description_permission'] = $options['description_permission'];
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'owl_rbac_permission_available'
+     */
     public function getBlockPrefix(): string
     {
         return 'owl_rbac_permission_available';

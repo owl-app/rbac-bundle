@@ -55,6 +55,11 @@ final class AssignType extends AbstractType
         $view->vars['description_permission'] = $options['description_permission'];
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'owl_rbac_assign'
+     */
     public function getBlockPrefix(): string
     {
         return 'owl_rbac_assign';
