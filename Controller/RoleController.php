@@ -12,12 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Owl\Bundle\RbacManagerBundle\Manager\ManagerInterface;
 use Owl\Bundle\RbacManagerBundle\Types\Item;
+use Owl\Component\Rbac\Model\RoleInterface;
 
 final class RoleController extends BaseController
 {
     public function availablesAction(Request $request, PermissionFormFactoryInterface $permissionFormFactory, ManagerInterface $rbacManager): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
+        /** @var RoleInterface $resource */
         $resource = $this->findOr404($configuration);
 
         $this->isGrantedOr403($configuration, 'role_availabes', $resource);
@@ -55,12 +57,14 @@ final class RoleController extends BaseController
             $configuration->getFormOptions(),
             [
                 'csrf_field_name' => '_csrf_token',
-                'csrf_token_id' => $request->get('name')
+                'csrf_token_id' => $request->request->get('name')
             ]
         );
         $method = $action === 'remove' ? 'DELETE' : 'POST';
 
         $this->isGrantedOr403($configuration, 'role_'.$action);
+
+        /** @var RoleInterface $role */
         $role = $this->findOr404($configuration);
 
         $form = $this->container->get('form.factory')->createNamed('', $configuration->getFormType(), null, $formOptions);

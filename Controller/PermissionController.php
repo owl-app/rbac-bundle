@@ -6,6 +6,7 @@ namespace Owl\Bundle\RbacBundle\Controller;
 
 use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
 use Owl\Bridge\SyliusResource\Controller\BaseController;
+use Owl\Component\Rbac\Model\PermissionInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Resource\Exception\DeleteHandlingException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,7 +40,7 @@ final class PermissionController extends BaseController
             $configuration->getFormOptions(),
             [
                 'csrf_field_name' => '_csrf_token',
-                'csrf_token_id' => $request->get('name')
+                'csrf_token_id' => $request->request->get('name')
             ]
         );
 
@@ -54,13 +55,11 @@ final class PermissionController extends BaseController
 
             $this->repository->add($newResource);
 
-            if (!$configuration->isHtmlRequest()) {
-                $responseData = [
-                    'message' => $this->get('translator')->trans('owl.rbac.permission.add_success', [], 'flashes'),
-                    'data' => $newResource
-                ];
-                return $this->createRestView($configuration, $responseData, Response::HTTP_CREATED);
-            }
+            $responseData = [
+                'message' => $this->get('translator')->trans('owl.rbac.permission.add_success', [], 'flashes'),
+                'data' => $newResource
+            ];
+            return $this->createRestView($configuration, $responseData, Response::HTTP_CREATED);
         } else {
             return new JsonResponse([
                 'status' => 'error',
@@ -78,6 +77,7 @@ final class PermissionController extends BaseController
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
         $this->isGrantedOr403($configuration, 'remove');
+        /** @var PermissionInterface $resource */
         $resource = $this->findOr404($configuration);
 
         $this->validateCsrfProtection($request, $configuration, $resource->getName());
@@ -85,17 +85,13 @@ final class PermissionController extends BaseController
         try {
             $this->resourceDeleteHandler->handle($resource, $this->repository);
         } catch (DeleteHandlingException $exception) {
-            if (!$configuration->isHtmlRequest()) {
-                return $this->createRestView($configuration, null, $exception->getApiResponseCode());
-            }
+            return $this->createRestView($configuration, null, $exception->getApiResponseCode());
         }
 
-        if (!$configuration->isHtmlRequest()) {
-            $responseData = [
-                'message' => $this->get('translator')->trans('owl.rbac.permission.remove_success', [], 'flashes')
-            ];
-            return $this->createRestView($configuration, $responseData, Response::HTTP_OK);
-        }
+        $responseData = [
+            'message' => $this->get('translator')->trans('owl.rbac.permission.remove_success', [], 'flashes')
+        ];
+        return $this->createRestView($configuration, $responseData, Response::HTTP_OK);
     }
 
     private function validateCsrfProtection(Request $request, RequestConfiguration $configuration, string $name): void
