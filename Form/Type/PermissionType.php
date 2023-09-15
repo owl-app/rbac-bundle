@@ -16,12 +16,9 @@ final class PermissionType extends AbstractResourceType
             ->add('name', HiddenType::class)
             ->add('group_permission', HiddenType::class)
             ->add('description', HiddenType::class);
-        ;
     }
 
     /**
-     * @return string
-     *
      * @psalm-return 'owl_rbac_permission'
      */
     public function getBlockPrefix(): string

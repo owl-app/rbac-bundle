@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Owl\Bundle\RbacBundle\Controller;
 
-use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
 use Owl\Bridge\SyliusResource\Controller\BaseController;
+use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
 use Owl\Component\Rbac\Model\PermissionInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
 use Sylius\Component\Resource\Exception\DeleteHandlingException;
@@ -25,7 +25,7 @@ final class PermissionController extends BaseController
         return $this->render($configuration->getTemplate('index.html'), [
             'configuration' => $configuration,
             'metadata' => $this->metadata,
-            'forms' => $permissionFormFactory->createByRoutes($configuration)
+            'forms' => $permissionFormFactory->createByRoutes($configuration),
         ]);
     }
 
@@ -40,8 +40,8 @@ final class PermissionController extends BaseController
             $configuration->getFormOptions(),
             [
                 'csrf_field_name' => '_csrf_token',
-                'csrf_token_id' => $request->request->get('name')
-            ]
+                'csrf_token_id' => $request->request->get('name'),
+            ],
         );
 
         $this->isGrantedOr403($configuration, 'add_availables_permission');
@@ -57,15 +57,16 @@ final class PermissionController extends BaseController
 
             $responseData = [
                 'message' => $this->get('translator')->trans('owl.rbac.permission.add_success', [], 'flashes'),
-                'data' => $newResource
+                'data' => $newResource,
             ];
+
             return $this->createRestView($configuration, $responseData, Response::HTTP_CREATED);
-        } else {
-            return new JsonResponse([
-                'status' => 'error',
-                'errors' => $this->getErrorMessages($form)
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        return new JsonResponse([
+            'status' => 'error',
+            'errors' => $this->getErrorMessages($form),
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function removeAction(Request $request): Response
@@ -89,8 +90,9 @@ final class PermissionController extends BaseController
         }
 
         $responseData = [
-            'message' => $this->get('translator')->trans('owl.rbac.permission.remove_success', [], 'flashes')
+            'message' => $this->get('translator')->trans('owl.rbac.permission.remove_success', [], 'flashes'),
         ];
+
         return $this->createRestView($configuration, $responseData, Response::HTTP_OK);
     }
 

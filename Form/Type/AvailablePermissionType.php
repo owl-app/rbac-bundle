@@ -28,12 +28,12 @@ final class AvailablePermissionType extends AbstractResourceType
 
         $resolver->setDefaults([
             'description_permission' => '',
-            'exist' => false
+            'exist' => false,
         ]);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -42,8 +42,6 @@ final class AvailablePermissionType extends AbstractResourceType
     }
 
     /**
-     * @return string
-     *
      * @psalm-return 'owl_rbac_permission_available'
      */
     public function getBlockPrefix(): string

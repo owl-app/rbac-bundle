@@ -7,12 +7,11 @@ namespace Owl\Bundle\RbacBundle\Factory;
 use Owl\Component\Rbac\Factory\PermissionFactoryInterface;
 use Owl\Component\Rbac\Model\AuthItemInterface;
 use Owl\Component\Rbac\Provider\RoutesPermissionProviderInterface;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Routing\Route;
-use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
-use Symfony\Component\Form\FormFactoryInterface;
 use Owl\Component\Rbac\Repository\PermissionRepositoryInterface;
 use Owl\Component\Rbac\Repository\RoleRepositoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Routing\Route;
 
 final class PermissionFormFactory implements PermissionFormFactoryInterface
 {
@@ -21,7 +20,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         private PermissionRepositoryInterface $permissionRepository,
         private RoleRepositoryInterface $roleRepository,
         private RoutesPermissionProviderInterface $routesPermissionProvider,
-        private FormFactoryInterface $formFactory
+        private FormFactoryInterface $formFactory,
     ) {
     }
 
@@ -40,7 +39,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
             $formsPermission[$route['group']][] = $this->createForm(
                 $this->permissionFactory->createWithData($name, $route['group'], $route['description']),
                 $requestConfiguration,
-                in_array($name, $existPermissions)
+                in_array($name, $existPermissions),
             );
         }
 
@@ -74,7 +73,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
                 $permission,
                 $requestConfiguration,
                 in_array($permission->getName(), $assignedPermissions),
-                ['disabled' => in_array($permission->getName(), $disabledPermissions)]
+                ['disabled' => in_array($permission->getName(), $disabledPermissions)],
             );
         }
 
@@ -87,7 +86,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
             'description_permission' => $permission->getDescription(),
             'exist' => $exist,
             'csrf_field_name' => '_csrf_token',
-            'csrf_token_id' => $permission->getName()
+            'csrf_token_id' => $permission->getName(),
         ]);
 
         $form = $this->formFactory->createNamed('', $requestConfiguration->getFormType(), $permission, $formOptions);
@@ -104,7 +103,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
     {
         $vars = $route->getDefaults()['_sylius']['vars'] ?? [];
         $group = $vars['permission']['group'] ?? false;
-        $description = $vars['permission']['description'] ?? 'owl.ui.permission.'.$name;
+        $description = $vars['permission']['description'] ?? 'owl.ui.permission.' . $name;
 
         return [$group, $description];
     }

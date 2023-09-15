@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Owl\Bundle\RbacBundle\Controller;
 
 use Exception;
+use Owl\Bridge\SyliusResource\Controller\BaseController;
 use Owl\Bundle\RbacBundle\Factory\PermissionFormFactoryInterface;
 use Owl\Bundle\RbacManagerBundle\Factory\ItemFactoryInterface;
-use Owl\Bridge\SyliusResource\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Owl\Bundle\RbacManagerBundle\Manager\ManagerInterface;
 use Owl\Bundle\RbacManagerBundle\Types\Item;
 use Owl\Component\Rbac\Model\RoleInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class RoleController extends BaseController
 {
@@ -26,14 +26,14 @@ final class RoleController extends BaseController
 
         $forms = $permissionFormFactory->createByExists(
             $configuration,
-            array_keys($rbacManager->getPermissionsByRole($resource->getName()))
+            array_keys($rbacManager->getPermissionsByRole($resource->getName())),
         );
 
         return $this->render($configuration->getTemplate('index.html'), [
             'configuration' => $configuration,
             'metadata' => $this->metadata,
             'role' => $resource,
-            'forms' => $forms
+            'forms' => $forms,
         ]);
     }
 
@@ -57,12 +57,12 @@ final class RoleController extends BaseController
             $configuration->getFormOptions(),
             [
                 'csrf_field_name' => '_csrf_token',
-                'csrf_token_id' => $request->request->get('name')
-            ]
+                'csrf_token_id' => $request->request->get('name'),
+            ],
         );
         $method = $action === 'remove' ? 'DELETE' : 'POST';
 
-        $this->isGrantedOr403($configuration, 'role_'.$action);
+        $this->isGrantedOr403($configuration, 'role_' . $action);
 
         /** @var RoleInterface $role */
         $role = $this->findOr404($configuration);
@@ -76,27 +76,30 @@ final class RoleController extends BaseController
             $assignItem = $rbacItemFactory->create($formData['type'], $formData['name']);
 
             try {
-                $rbacManager->{$action.'Child'}($roleItem, $assignItem);
+                $rbacManager->{$action . 'Child'}($roleItem, $assignItem);
 
                 if (!$configuration->isHtmlRequest()) {
                     $responseData = [
-                        'message' => $this->get('translator')->trans('owl.rbac.permission.add_success', [], 'flashes')
+                        'message' => $this->get('translator')->trans('owl.rbac.permission.add_success', [], 'flashes'),
                     ];
+
                     return $this->createRestView($configuration, $responseData, Response::HTTP_OK);
                 }
             } catch(Exception $e) {
                 $responseData = [
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
                 ];
+
                 return $this->createRestView($configuration, $responseData, Response::HTTP_BAD_REQUEST);
             }
         } else {
             $responseData = [
                 'message' => [
                     'status' => 'error',
-                    'errors' => $this->getErrorMessages($form)
-                ]
+                    'errors' => $this->getErrorMessages($form),
+                ],
             ];
+
             return $this->createRestView($configuration, $responseData, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }

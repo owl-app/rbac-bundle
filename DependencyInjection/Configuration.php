@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Owl\Bundle\RbacBundle\DependencyInjection;
 
 use Owl\Bundle\RbacBundle\Controller\PermissionController;
-use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Owl\Bundle\RbacBundle\Form\Type\PermissionType;
 use Owl\Bundle\RbacBundle\Form\Type\RoleType;
 use Owl\Component\Rbac\Model\AuthItem;
+use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
+use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Owl\Component\Rbac\Model\AuthItemInterface;
-use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 
 final class Configuration implements ConfigurationInterface
 {

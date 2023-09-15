@@ -20,19 +20,19 @@ final class AssignType extends AbstractType
         $builder
             ->add('name', HiddenType::class, [
                 'constraints' => [
-                    new NotBlank()
-                ]
+                    new NotBlank(),
+                ],
             ])
             ->add('type', HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Choice([
-                        'choices' => ['permission', 'role']
-                    ])
-                ]
+                        'choices' => ['permission', 'role'],
+                    ]),
+                ],
             ])
             ->add('_method', HiddenType::class, [
-                'mapped' => false
+                'mapped' => false,
             ])
         ;
     }
@@ -44,7 +44,7 @@ final class AssignType extends AbstractType
         $resolver->setDefaults([
             'description_permission' => '',
             'exist' => false,
-            'disabled' => false
+            'disabled' => false,
         ]);
     }
 
@@ -56,8 +56,6 @@ final class AssignType extends AbstractType
     }
 
     /**
-     * @return string
-     *
      * @psalm-return 'owl_rbac_assign'
      */
     public function getBlockPrefix(): string

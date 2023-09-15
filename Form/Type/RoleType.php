@@ -19,14 +19,12 @@ final class RoleType extends AbstractResourceType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'owl.form.common.description',
-                'required' => false
+                'required' => false,
             ])
         ;
     }
 
     /**
-     * @return string
-     *
      * @psalm-return 'owl_rbac_role'
      */
     public function getBlockPrefix(): string

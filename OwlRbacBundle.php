@@ -6,7 +6,6 @@ namespace Owl\Bundle\RbacBundle;
 
 use Sylius\Bundle\ResourceBundle\AbstractResourceBundle;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class OwlRbacBundle extends AbstractResourceBundle
 {
@@ -24,8 +23,6 @@ final class OwlRbacBundle extends AbstractResourceBundle
 
     /**
      * @psalm-suppress MismatchingDocblockReturnType https://github.com/vimeo/psalm/issues/2345
-     *
-     * @return string
      *
      * @psalm-return 'Owl\Component\Rbac\Model'
      */

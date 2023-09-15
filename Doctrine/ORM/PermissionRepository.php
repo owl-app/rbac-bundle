@@ -6,8 +6,8 @@ namespace Owl\Bundle\RbacBundle\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
 use Owl\Component\Rbac\Model\PermissionInterface;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Owl\Component\Rbac\Repository\PermissionRepositoryInterface;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 /**
  * @template T of PermissionInterface
@@ -25,10 +25,7 @@ class PermissionRepository extends EntityRepository implements PermissionReposit
         ;
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function findOneByName(array ... $name): QueryBuilder
+    public function findOneByName(array ...$name): QueryBuilder
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.name = :name')
