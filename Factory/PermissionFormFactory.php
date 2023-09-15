@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Owl\Bundle\RbacBundle\Factory;
 
+use Owl\Component\Core\Model\Rbac\RoleInterface;
 use Owl\Component\Rbac\Factory\PermissionFactoryInterface;
 use Owl\Component\Rbac\Model\AuthItemInterface;
 use Owl\Component\Rbac\Provider\RoutesPermissionProviderInterface;
 use Owl\Component\Rbac\Repository\PermissionRepositoryInterface;
-use Owl\Component\Rbac\Repository\RoleRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\RequestConfiguration;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Route;
 
@@ -18,7 +19,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
     public function __construct(
         private PermissionFactoryInterface $permissionFactory,
         private PermissionRepositoryInterface $permissionRepository,
-        private RoleRepositoryInterface $roleRepository,
+        private RepositoryInterface $roleRepository,
         private RoutesPermissionProviderInterface $routesPermissionProvider,
         private FormFactoryInterface $formFactory,
     ) {
@@ -59,6 +60,7 @@ final class PermissionFormFactory implements PermissionFormFactoryInterface
         if ($withRoles) {
             $existsRoles = $this->roleRepository->findAll();
 
+            /** @var RoleInterface $role */
             foreach ($existsRoles as $role) {
                 $formsPermission['availables_roles'][] = $this->createForm(
                     $role,
